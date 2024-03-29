@@ -3,7 +3,7 @@
 # VS DAVE (DAVE ENGINE)
 this is dave
 
-<img src="[https://static.wikia.nocookie.net/ultrapiedia-64/images/3/3e/Dave.png/revision/latest?cb=20220405005149]" width="211" height="373">
+<img src="[https://ultrapiedia-64.fandom.com/wiki/Dave?file=Dave.png]" width="211" height="373">
 
 ## About the mod
 Powered by a heavily modified version of Kade Engine, The mod includes lots of additional improvements such as
