@@ -1,0 +1,126 @@
+# THE FOLLOWING ACTIONS CODE IS FROM THE PSYCH ENGINE REPO: https://github.com/ShadowMario/FNF-PsychEngine/blob/main/.github/workflows/main.yml
+
+name: ios
+
+# Controls when the action will run.
+on:
+  # Triggers the workflow on push or pull request events but only for the master branch
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  ReleaseBuild:
+    runs-on: macos-latest
+
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2.3.0
+            - name: Build iOS Action
+  # You may pin to the exact commit or the version.
+  # uses: sparkfabrik/ios-build-action@be021d9f600b104d199a500db7ba479149a6b257
+  uses: sparkfabrik/ios-build-action@v2.3.2
+  with:
+    # Upload to TestFlight.
+    upload-to-testflight: # optional
+    # Increment build number.
+    increment-build-number: # optional
+    # Project path
+    project-path: 
+    # Team id
+    team-id: 
+    # Team name
+    team-name: 
+    # Apple key id
+    apple-key-id: 
+    # Apple key issuer id
+    apple-key-issuer-id: 
+    # Apple key content
+    apple-key-content: 
+    # Workspace path
+    workspace-path: # optional, default is 
+    # Choose app-store, ad-hoc, package, enterprise, development, or developer-id
+    export-method: # optional, default is app-store
+    # For example, Debug, Release
+    configuration: # optional, default is Release
+    # Output path of ipa
+    output-path: # optional, default is output.ipa
+    # Scheme
+    scheme: # optional, default is 
+    # Targets to be updated with mobileprovision, code signing identity, etc
+    update-targets: # optional, default is 
+    # Boolean to tell if `pod install` should be run during build.
+    build-pods: # optional
+    # The path to the Podfile.
+    pods-path: # optional, default is Podfile
+    # The password to decrypt certificates.
+    match-password: 
+    # The git url where match can find the certificates.
+    match-git-url: 
+    # The basic authorization to access the repository.
+    match-git-basic-authorization: 
+    # The build type to use when building the app.
+    match-build-type: 
+    # Boolean to tell the Action to upload the .ipa to Browserstack App Live after the build.
+    browserstack-upload: # optional
+    # Browserstack username (required if browserstack-upload == true)
+    browserstack-username: # optional, default is 
+    # Browserstack access key (required if browserstack-upload == true)
+    browserstack-access-key: # optional, default is 
+    # Specify the Fastlane version you wish to use
+    fastlane-version: # optional, default is 2.213.0
+    # Name of the env file name to pass to fastlane --env
+    fastlane-env: # optional, default is 
+    # The iOS application identifier; useful to sync a specific provisioning profile
+    ios-app-id: # optional
+      - uses: krdlab/setup-haxe@master
+        with:
+          haxe-version: 4.2.5
+      # Runs a set of commands using the runners shell
+      - name: Install Haxelib
+        run: |
+          haxelib setup C:/haxelib
+          haxelib install hxcpp > nul
+          haxelib install lime 8.0.0
+          haxelib install openfl
+          haxelib install flixel 4.11.0
+          haxelib run lime setup flixel
+          haxelib run lime setup         
+          haxelib remove flixel-addons
+          haxelib remove flixel-tools
+          haxelib remove flixel-ui
+          haxelib install flixel-tools
+          haxelib install flixel-ui
+          haxelib install flixel-addons 2.9.0
+          haxelib install tjson
+          haxelib install hxjsonast
+          haxelib install hxCodec 2.5.1
+          haxelib install linc_luajit
+          haxelib install hscript
+          haxelib git hscript-ex https://github.com/ianharrigan/hscript-ex
+          haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
+          haxelib git hxvm-luajit https://github.com/nebulazorua/hxvm-luajit
+          haxelib git faxe https://github.com/uhrobots/faxe
+          haxelib git polymod https://github.com/larsiusprime/polymod.git
+          haxelib install hxcpp-debug-server
+          haxelib list
+      - name: Skip SScript setup mode
+        run: echo 'oy9:showMacroty8:loopCosti25y10:includeAllfg' >> ~/settings.cocoa
+      - name: Skip SScript setup mode
+      - name: Compile 1
+        with:
+          PLATFORM_NAME: 'iphoneos'
+          SDKROOT: 'iphoneos16.2'
+      - name: Compile 2
+        run: haxelib run lime build ios -release
+      - name: Publish Artifact
+        uses: actions/upload-artifact@v2.2.4
+        with:
+          name: ReleaseBuild
+          path: export/release/ios/bin
